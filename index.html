@@ -13,7 +13,7 @@
                 <p class="game-message">
                     Try to guess the computer's number within 3 tries!
                 </p>
-                <input
+                <input 
                     class="number-input"
                     type="number"
                     name=""
@@ -22,23 +22,21 @@
                 />
 
                 <div class="guess-container">
-                    <p class="text">Result: <span id="guess-message"></span></p>
+                    <p class="text">Result: <span id="guess-message"></span></p> <!-- outputs message too high or too low-->
                     <p class="text">
-                        Your Guess: <span id="current-guess"></span>
+                        Your Guess: <span id="current-guess"></span><!--Ouput current guess-->
                     </p>
                     <p class="text">
-                        Computer Guess: <span id="computer-guess"></span>
+                        Computer Guess: <span id="computer-guess"></span> <!-- Random Number Generator-->
                     </p>
                     <p class="text">
-                        Guess History: <span id="guess-history"></span>
+                        Guess History: <span id="guess-history"></span> <!-- Outputs guess History-->
                     </p>
                 </div>
 
                 <div class="btn-container">
                     <button id="submit-btn" class="btn">Submit Guess</button>
-                    <button id="restart-btn" class="btn" disabled>
-                        Restart
-                    </button>
+                    <button id="restart-btn" class="btn" disabled>Restart</button>
                 </div>
             </article>
         </main>
