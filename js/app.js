@@ -1,54 +1,75 @@
 "use strict";
 const submitBtn = document.getElementById("submit-btn");  //Submit-btn enable and then disable
-const guessInput = document.getElementById("current-guess"); 
-const computerNumber = document.getElementById("computer-guess"); 
-const myGuesses = document.getElementById("guess-history");  
-const guessMessage = document.getElementById("guess-message");
+const userInput = document.getElementById("guess-input");//input
+const number = document.getElementById("current-guess");  //output
+const computerNumber = document.getElementById("computer-guess"); //randome number
+const myGuesses = document.getElementById("guess-history");  //array of 3 inputs
+const guessMessage = document.getElementById("guess-message"); //message
+const resetBtn = document.getElementById('resetBtn');  //reset buttom enable and disable
 
-// Computer picks number
-let computerGuess = "";
-  function getRandomNumber(min,max) {  //This is not working at all
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-    computerGuess = getRandomNumber(1, 10); // Generates a random number between 1 and 10 (inclusive)
-    computerNumber.innerText = computerGuess;
-  }
-  let myNumbers = [];     // User picks Number
-  let guess = "";
-for (let i = 0; i < 3 && guess != computerGuess; i++) {
+let computerGuess = "";  //computer guess
+let guessHistory = [];   //array to store three guesses  
+let guess = " " ;        // user input   
+let result = " ";        //message
 
-  function getInput () {              //User enters numbers
-    
-    guess = parseInt(guessInput.value);
-    guessInput.innerText = guess;
-    
+
+// Step 1)  Computer picks number
+function getRandomNumber(min,max) {  
+    return Math.floor(Math.random() * (max - min + 1)) + min; 
   }
-  function compareAndStore() {    //Compare and store user guess
+  computerGuess = getRandomNumber(1,10);    //This works
+    
   
-    myNumbers[i] = guess;
-    myGuesses.innerText = myNumbers[i]; //Stores and outputs guess history
-
-    if (guess < computerGuess) {
-      guessMessage.innerText = "Your answer is too small";
-    }  else if (guess > computerGuess) {
-      guessMessage.innerText = "Your Guess is too high";  
-    }  
-    if (guess = computerGuess) {
-      guessMessage.innerText = "Your Guess is correct!  You Win!";
-    }
-    if (i = 3) {
-      guessMessage.innerText = "You did not guess the correct answer.  Try Again?";
-    }
+     //Starts the game at guess 0
+   var i = 0;                        
+        
+        function playGame () { //Loop to play the game
+            while (i < 3) {            
+                guess = parseInt(userInput.value);  //User enters numbers                  
+                guessHistory[i] = guess;  // puts guesses in the array 
+                number.innerText = guess;                                  
+       
+        if (guess > computerGuess){
+             result = "Your guess is too high!!";
+             guessMessage.innerText = result;
+          }
+        if (guess < computerGuess){
+              result = "Your guess is too low!!";
+              guessMessage.innerText = result;
+          }
+        if (guess = computerGuess){
+           result = "You won!!";
+           guessMessage.innerText = result;
+           computerNumber.innerText = computerGuess;
+           i == 3;
+        }
+        myGuesses.innerText = guessHistory[i];
+        i++;
   }
 }
-
-function render() {  
-  getRandomNumber();
-  getInput(); 
-  compareAndStore();
-
-
+if (i == 3){
+    result = "You did not win, play again?";
+    computerNumber.innerText = computerGuess;
+    
 }
+function render() {  
+    getRandomNumber();
+    playGame();
+}
+
 submitBtn.addEventListener("click", function () {   
     render();
+});
+resetBtn.addEventListener('click', () => {  // I do not know how to do this part!!!
   
 });
+
+//I don't know if I neede this or not
+function validateInput(event) {
+      const invalidCharacters = ["e", "E", "-", "+"];
+      if (invalidCharacters.includes(event.key)) {
+          event.preventDefault();
+      }
+  }
+  userInput.addEventListener("keydown", validateInput);
+  
