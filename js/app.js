@@ -5,7 +5,9 @@ const number = document.getElementById("current-guess");  //output
 const computerNumber = document.getElementById("computer-guess"); //randome number
 const myGuesses = document.getElementById("guess-history");  //array of 3 inputs
 const guessMessage = document.getElementById("guess-message"); //message
-const resetBtn = document.getElementById('resetBtn');  //reset buttom enable and disable
+const resetBtn = document.getElementById('restart-btn');  //reset buttom enable and disable
+
+
 
 let computerGuess = "";  //computer guess
 let guessHistory = [];   //array to store three guesses  
@@ -21,13 +23,19 @@ function getRandomNumber(min,max) {
     
   
      //Starts the game at guess 0
-   var i = 0;                        
+                           
+        let i = 0;
         
         function playGame () { //Loop to play the game
+           i = 0;
+           guess = "";
             while (i < 3) {            
                 guess = parseInt(userInput.value);  //User enters numbers                  
-                guessHistory[i] = guess;  // puts guesses in the array 
-                number.innerText = guess;                                  
+                guessHistory.push(guess);  // puts guesses in the array 
+                number.innerText = guess; 
+                myGuesses.innerText = guessHistory; 
+                i++;
+
        
         if (guess > computerGuess){
              result = "Your guess is too high!!";
@@ -37,31 +45,33 @@ function getRandomNumber(min,max) {
               result = "Your guess is too low!!";
               guessMessage.innerText = result;
           }
-        if (guess = computerGuess){
+       if (guess == computerGuess){
            result = "You won!!";
            guessMessage.innerText = result;
            computerNumber.innerText = computerGuess;
-           i == 3;
+           resetBtn.disabled = false; // Enables the button - but it doesn't
+           i = 10;
         }
-        myGuesses.innerText = guessHistory[i];
+        myGuesses.push(i);
+        myGuesses.innerText = guessHistory; 
         i++;
+        if (i === 2){ //We never get here
+            result = "You did not win, play again?";
+            computerNumber.innerText = computerGuess;
+            resetBtn.disabled = false; // Enable the button
+        }
   }
-}
-if (i == 3){
-    result = "You did not win, play again?";
-    computerNumber.innerText = computerGuess;
-    
-}
+ }
 function render() {  
     getRandomNumber();
     playGame();
 }
-
 submitBtn.addEventListener("click", function () {   
     render();
 });
-resetBtn.addEventListener('click', () => {  // I do not know how to do this part!!!
-  
+resetBtn.addEventListener('click', () => {  //My Reset button turns on but it does not restart the game
+    buttonToBeClicked.textContent = initialText;
+    addListener();
 });
 
 //I don't know if I neede this or not
